@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API de Ropa</title>
+</head>
+<body>
+    <h1>API de Ropa</h1>
+    
+    <div id="ropa-container"></div>
+    
+    <script>
+        // Función para obtener datos de la API y mostrarlos en la interfaz
+        async function obtenerRopa() {
+            try {
+                const response = await fetch('https://resources.claroshop.com/medios-plazavip/fotos/productos_sears1/original/3043132.jpg');
+                const data = await response.json();
+                mostrarRopa(data);
+            } catch (error) {
+                console.error('Error al obtener datos:', error);
+            }
+        }
+
+        // Función para mostrar los datos de ropa en la interfaz
+        function mostrarRopa(data) {
+            const ropaContainer = document.getElementById('ropa-container');
+            ropaContainer.innerHTML = '';
+
+            data.forEach((item) => {
+                const elemento = document.createElement('div');
+                elemento.innerHTML = `
+                    <h2>${item.nombre}</h2>
+                    <img src="${item.imagen}" alt="${item.nombre}">
+                    <p>${item.descripcion}</p>
+                `;
+                ropaContainer.appendChild(elemento);
+            });
+        }
+
+        // Llama a la función para obtener datos cuando la página cargue
+        window.onload = obtenerRopa;
+    </script>
+</body>
+</html>
